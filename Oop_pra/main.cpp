@@ -1,11 +1,13 @@
-#include"Employee.h"
+#include"myStrBlob.h"
 #include<string>
+#include<iostream>
 using namespace std;
 int main() {
-	string s = "zhao";
-	//b=a这里调用的是拷贝构造函数，不会调用赋值运算符
-	Employee a(s), b=a, c;
-	c = b;
-	f(a); f(b); f(c);
+	
+	StrBlob a;
+	for (int i = 0; i < 10; i++) {
+		a.push_back(to_string(i));
+	}
+
 	return 0;
 }
