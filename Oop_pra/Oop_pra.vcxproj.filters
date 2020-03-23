@@ -27,12 +27,18 @@
     <ClInclude Include="myStrBlob.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="StrVec.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="TreeNode.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
+    <ClCompile Include="StrVec.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
   </ItemGroup>

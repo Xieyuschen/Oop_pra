@@ -142,9 +142,11 @@
     <ClInclude Include="HasPtr.h" />
     <ClInclude Include="myStrBlob.h" />
     <ClInclude Include="Saledata.h" />
+    <ClInclude Include="StrVec.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
+    <ClCompile Include="StrVec.cpp" />
     <ClCompile Include="TreeNode.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

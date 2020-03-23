@@ -110,6 +110,67 @@ private:
 }
 ```
 当然对于listnode这种，好像值类型是没有什么必要的，为什么要定义值类型呢？正如我复制了一个节点，但之后还有一大堆麻烦事在等着我都需要考虑。所以就不要这么做了。
+
+# 动态内存管理类：
+&emsp;&emsp;自定义一个`StrVec`类。记录一下一些使用到的新方法。  
+## 一些新的类
+### 1. Allocator类
+&emsp;&emsp;所有C++标准库容器都具有一个默认为 allocator 的模板参数。通过使用自定义**分配器构造容器可控制该容器的元素的分配和释放**。  
+&emsp;&emsp;例如，分配器对象可能会在私有堆上或共享内存中分配存储，或者可能针对小型或大型对象大小进行优化。 它可能还会通过它提供的类型定义靠指定通过管理共享内存或执行自动垃圾回收的特殊访问器对象访问元素。 因此，使用分配器对象分配存储的类应使用这些类型来声明指针和引用对象，这与 C++ 标准库中的容器所执行的操作一样。
+
+#### 分配释放内存：
+```cpp
+allocator<int> alloc;
+allocator<int>::pointer ptr;
+
+//pointer allocate(size_t i)，分配i个对象的空间，对象类型已由this的类型指定
+ptr=alloc.allocate(10);
+
+int i;
+for(i=0;i<10;i++){
+    ptr[i]=i;
+}
+for(i=0;i<10;i++){
+    cout<<ptr[i]<<ends;
+}
+//在释放的时候，指定
+alloc.deallocate(ptr,10);
+```
+#### const_pointer 与const_reference
+- 指针类型描述一个对象 ptr，该对象可通过表达式 *ptr 指定 allocator 可分配的对象类型的任何常量对象。
+- 提供对由分配器管理的对象类型的常量引用的类型。
+简单来说就是提供了两种引用语义。
+```cpp
+//接上一段代码，
+vector<int>::const_reference ref;
+//ptr为allocator<int>::const_pointer，vec中包含10个元素[0..10]
+ptr=vec.begin();
+//ref是对vec中第一个元素的绑定，现在ref为0
+ref=ptr;
+//对vec中的第一个元素进行修改，现在vec第一个的元素值为100，而不是刚开始的0
+ref=100;
+```
+
+使用`const_pointer`和`const_reference` 可以有效的减少自己定义指针以及引用的类型，对于模板类的使用减少了出错机会。
+#### construct()
+在使用指定值初始化的指定地址出构造特定类型的对象。
+```cpp
+//ptr执行要构造对象位置的指针
+//val初始化要构造对象的值
+void construct(pointer ptr, const Type& val);
+void construct(pointer ptr, Type&& val);
+template <class _Other>
+    void construct(pointer ptr, _Other&&... val);
+```
+#### deallocate()
+- 从指定位置开始从存储中释放指定数量的的对象.  
+- 成员函数通过调用 operator delete(ptr)，为从ptr开始 Type 类型的计数对象数组释放存储。 必须先通过对等于 *this的分配器对象调用allocate来返回指针ptr ，并分配大小和类型相同的数组对象。 deallocate 绝不会引发异常.
+```cpp
+void deallocate(pointer ptr, size_type count);
+```
+
+#### destory
+调用对象析构函数而不释放存储对象的内存。
 # 习题练习精选：
 ### 什么时候使用拷贝构造函数？
 - 拷贝初始化，传递给非引用类型形参，**返回值为非引用类型**的对象，**初始化标准容器或调用push/insert操作的时候。
@@ -167,3 +228,7 @@ func(b);
 func(c);
 ```
 &emsp;&emsp;对以上的代码来说，如果定义了拷贝构造函数，那么输出的值就不会相同。但是注意**在函数实参与形参传递的时候调用了拷贝构造函数，形参这个临时对象被分配了新的值**。
+
+
+### 13.32 默认的swap也很好用^_^，一般情况下不需要自己写
+![](Images/3.png)
