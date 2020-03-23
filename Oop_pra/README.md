@@ -65,14 +65,51 @@ private:
 
 - 当拷贝或赋值一个HasPtr对象时，我们希望副本和原对象都指向相同的string。那么就考呗指针而非string值。
 
+- 这里给出了一个合适的理解，如何理解指针类行为。
+![](Images/2.jpg)
 
 ## 如何区分行为像指针的类与像值得类？
 - 如果存在使用智能指针，或者有引用计数这个东西的话，就很明显是把类当作指针行为
 - 如果对于每个资源都进行另行复制，那么就是希望这个类有值行为。、
 - 当然，面对自己设计的类的时候，究竟是选择具有值行为还是指针行为，还是需要仔细分析才对。
 
+## 一个Demo
+- 这个demo是C++primer练习题13.28，要求如下，觉得这个很不错就拿过来用一下：  
 
 
+![](Images/1.png)  
+
+- 这里个人觉得类值行为更为妥当，但是有一个问题：**如果自定义类含有指向自己类型的指针的话，是否不能有类值行为，而必须是类指针行为**？  
+&emsp;&emsp;对于类值类型，指向自定义类型的指针不能直接把指针拷贝过去（拷贝指针不需要调用构造函数进行动态分配空间），而是需要进行动态分配一块内存，那动态分配的时候首先调用构造函数，构造函数同样需要对自己里面含有的指针成员调用构造函数，子子孙孙无穷尽也？所以如果含有指向自己类型的指针的话大概是不能有值类型行为的。  
+```cpp
+class listnode{
+    listnode(int &s):value(s),next(nullptr),count(new int(0)){};
+    listnode(const listnode& p):next(p.next),value(p.value){++*count;}
+private:
+    int *count;
+    listnode* next;
+    int value;
+}
+
+//表现为值类型的list类
+class listnode{
+    //如果有值行为就一定会有这一步，构造函数创建一个指向自己类型的指针
+    //这个时候就需要重载一个空的构造函数，应付这种情况
+    listnode():next(nullptr),value(0){};
+    listnode(int &val):next(new listnode()),value(val){};
+    listnode(const listnode& n):value(n.value){
+        next=new listnode();
+        //那这一步赋值时还是一个拷贝过程，需要调用对应的拷贝赋值运算符。
+        //何必呢，而且拷贝出来一个值类型的此类是没有意义的。
+        *next=*n.next;
+    }
+    listnode(int )
+private:
+    listnode* next;
+    int value;
+}
+```
+当然对于listnode这种，好像值类型是没有什么必要的，为什么要定义值类型呢？正如我复制了一个节点，但之后还有一大堆麻烦事在等着我都需要考虑。所以就不要这么做了。
 # 习题练习精选：
 ### 什么时候使用拷贝构造函数？
 - 拷贝初始化，传递给非引用类型形参，**返回值为非引用类型**的对象，**初始化标准容器或调用push/insert操作的时候。
