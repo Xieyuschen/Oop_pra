@@ -113,7 +113,7 @@ private:
 
 # 动态内存管理类：
 &emsp;&emsp;自定义一个`StrVec`类。记录一下一些使用到的新方法。  
-## 一些新的类
+## 一些新的类与方法
 ### 1. Allocator类
 &emsp;&emsp;所有C++标准库容器都具有一个默认为 allocator 的模板参数。通过使用自定义**分配器构造容器可控制该容器的元素的分配和释放**。  
 &emsp;&emsp;例如，分配器对象可能会在私有堆上或共享内存中分配存储，或者可能针对小型或大型对象大小进行优化。 它可能还会通过它提供的类型定义靠指定通过管理共享内存或执行自动垃圾回收的特殊访问器对象访问元素。 因此，使用分配器对象分配存储的类应使用这些类型来声明指针和引用对象，这与 C++ 标准库中的容器所执行的操作一样。
@@ -171,6 +171,70 @@ void deallocate(pointer ptr, size_type count);
 
 #### destory
 调用对象析构函数而不释放存储对象的内存。
+```cpp
+void destroy(pointer ptr);
+```
+### 2. initializer_list类
+提供访问元素数组的权限，其中数组的每个成员均具有指定的类型。  
+似乎只能列表初始化，似乎是列表初始化的基础，这里放到这里，作业做完之后专门学。  
+:)
+### std::uninitializer_copy()
+```cpp
+ForwardIterator uninitialized_copy ( InputIterator first, InputIterator last,
+                                       ForwardIterator result );
+```
+Constructs copies of the elements in the range [first,last) into a range beginning at result and returns an iterator to the last element in the destination range.
+
+## StrVec 的设计思路：
+### 构造函数：
+构造函数要考虑的即有何成员：
+1. 表示元素开始的指针，尾后指针
+2. 表示容量的指针
+首先构造函数接受一个`initializer_list`作为参数，用来实现列表初始化。接受之后进行动态内存分配，使用比较fashion的`uninitializer_copy`来操作。
+```cpp
+//1. 分配内存
+//2. 把initializer_list的值放到分配的内存中去
+//3. 在添加完值得内存空间对应得首尾指针返回
+//demo写了好几个函数，在这里简单起见只写一个函数 :)
+//但其实分开写几个函数有利于重用
+StrVec(std::initializer_list<std::string> li){
+    //分配内存
+    auto data=alloc.allocate(li.begin()-li.end());
+    //进行赋值
+    auto it=std::uninitializer_copy(li.begin(),li.end(),data);
+    //将构造的指针赋给数据成员
+    elements=data;
+    first_free=cap=it;
+}
+
+```
+### 拷贝构造函数
+在拷贝的时候，只需要把已有的元素给拷贝过来，而不需要把空的空间也拷贝过来。
+```cpp
+StrVec(const StrVec &rhs){
+    auto data=alloc.allocate(rhs.begin()-rhs.end());
+    auto it=std::uninitializer_copy(rhs.begin(),rhs.end(),data);
+    elements=data;
+    first_free=cap=it;
+}
+```
+### 析构函数
+首先把有值的空间给destory掉，然后在调用`deallocate()`函数释放掉所使用的函数
+```cpp
+~StrVec(){
+    if(elements){
+        for(auto p=first_free;p!=elements;){
+            alloc.destroy(--p);
+        }
+        alloc.deallocate(elements,cap-elements);
+    }
+}
+
+```
+
+
+
+
 # 习题练习精选：
 ### 什么时候使用拷贝构造函数？
 - 拷贝初始化，传递给非引用类型形参，**返回值为非引用类型**的对象，**初始化标准容器或调用push/insert操作的时候。

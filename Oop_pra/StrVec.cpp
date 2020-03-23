@@ -8,7 +8,9 @@ void StrVec::push_back(const std::string& s)
 std::pair<std::string*, std::string*>
 StrVec::alloc_n_copy(const std::string* b, const std::string* e)
 {
+    //分配内存
     auto data = alloc.allocate(e - b);
+    //使用
     return{ data, std::uninitialized_copy(b, e, data) };
 }
 
