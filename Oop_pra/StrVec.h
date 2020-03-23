@@ -22,9 +22,9 @@ public:
     std::string& at(size_t pos) { return *(elements + pos); }
     const std::string& at(size_t pos) const { return *(elements + pos); }
 
-    void reserve(size_t new_cap);
+    /*void reserve(size_t new_cap);
     void resize(size_t count);
-    void resize(size_t count, const std::string&);
+    void resize(size_t count, const std::string&);*/
 
 private:
     std::pair<std::string*, std::string*> alloc_n_copy(const std::string*, const std::string*);
