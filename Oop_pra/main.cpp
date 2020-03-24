@@ -1,4 +1,4 @@
-#include"StrVec.h"
+#include"String.h"
 #include<string>
 #include<vector>
 #include<iostream>
@@ -6,9 +6,6 @@
 #include<algorithm>
 using namespace std;
 int main() {
-	StrVec vec{ "1","2","3" };
-
-	vec.push_back(to_string(0));
-
-
+	String a("Helloworld");
+	
 }
