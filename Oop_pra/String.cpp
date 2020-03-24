@@ -52,3 +52,17 @@ String& String::operator = (const String& rhs)
     std::cout << "copy-assignment" << std::endl;
     return *this;
 }
+
+String::String(String&& s) :elements(s.elements), end(s.end) {
+    s.elements = s.end = nullptr;
+}
+String& String::operator=(String&& s)noexcept {
+    //比较指针确定是否为自赋值。
+    if (this != &s) {
+        free();
+        elements = s.elements;
+        end = s.end;
+        s.elements = s.end = nullptr;
+    }
+    return *this;
+}

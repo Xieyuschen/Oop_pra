@@ -12,6 +12,8 @@ public:
     String(const char*);
     String(const String&);
     String& operator=(const String&);
+    String(String&&)noexcept;
+    String& operator=(String&&);
     ~String();
 
     const char* c_str() const { return elements; }

@@ -67,3 +67,17 @@ void StrVec::push_back(const string& s) {
 	//不要++first_free 而是first_free++
 	alloc.construct(first_free++, s);
 }
+
+StrVec::StrVec(StrVec&& rhs):elements(rhs.elements),first_free(rhs.first_free),cap(rhs.cap){
+	rhs.elements = rhs.first_free = rhs.cap = nullptr;
+}
+StrVec& StrVec::operator=(StrVec&& rhs) {
+	if (this != &rhs) {
+		free();
+		elements = rhs.elements;
+		first_free = rhs.first_free;
+		cap = rhs.cap;
+		rhs.elements = rhs.first_free = rhs.cap = nullptr;
+	}
+	return *this;
+}
