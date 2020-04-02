@@ -139,12 +139,14 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="Basket.h" />
+    <ClInclude Include="Bulk_quote.h" />
+    <ClInclude Include="disc_quote.h" />
     <ClInclude Include="Quote.h" />
-    <ClInclude Include="SelfQuote.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="bulk_quote.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Quote.cpp" />
+    <ClCompile Include="Quota.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
