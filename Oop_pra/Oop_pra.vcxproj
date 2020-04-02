@@ -138,18 +138,12 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
-    <ClInclude Include="Employee.h" />
-    <ClInclude Include="HasPtr.h" />
-    <ClInclude Include="myStrBlob.h" />
-    <ClInclude Include="Saledata.h" />
-    <ClInclude Include="String.h" />
-    <ClInclude Include="StrVec.h" />
+    <ClInclude Include="Quote.h" />
+    <ClInclude Include="SelfQuote.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="String.cpp" />
-    <ClCompile Include="StrVec.cpp" />
-    <ClCompile Include="TreeNode.cpp" />
+    <ClCompile Include="Quote.cpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

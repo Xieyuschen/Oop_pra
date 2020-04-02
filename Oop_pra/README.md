@@ -237,3 +237,57 @@ StrVec(const StrVec &rhs){
 
 
 
+# 访问控制与继承
+## 受保护的成员：
+![](Images/9.png)
+protected的几条性质：
+- 与private相似，受保护成员对于类的用户来说是不可访问的。  
+- 与public类似，受保护的成员对于派生类的友元和成员来说是可访问的。  
+- **protected的重要性质：**  
+派生类的成员或友元只能通过派生类对象来访问基类的受保护成员。对于基类对象中的受保护成员没有任何访问特权。  
+这句话如何理解呢？举个例子：  
+```cpp
+class father{
+protected:
+    string gameAccount;
+}
+class child:public father{
+    friend void playgame(child& );//能访问father::gameAccount
+    friend void playgame(father&);//不能访问father::gameAccount，只能用自己爸爸的游戏帐户
+}
+//正确，child是可以访问father的private和protected成员，所以可以访问gameAccount
+void playgame(child& s){
+    login(s.gameAccount);
+    //blabla
+}
+//错误，不能访问father的protected成员
+void playgame(father& s){/*blabla*/}
+```
+
+## public,private,protected derive
+某个类对其继承而来的成员的访问权限收到两个因素影响，一是在基类中该成员的访问说明符，第二是在派生类的派生列表中的访问说明符。  
+派生访问呢说明符对于派生类的成员能否访问其直接基类的成员没什么影响，至于基类的访问说明符有关。  
+比如说：public继承的可以访问基类public成员，而private就不可以。
+
+## 派生类向基类转换的可访问性：
+![](Images/10.png)
+**这里要区分的内容**。
+- 用户代码即**类外代码**，如果不是public的话是不能发生转换，因为在转换发生的时候类中私有继承的成员不能传递给令一个对象（因为类外无法访问private/protected成员）。  
+- 如果在成员函数中的话，转换可以随便进行。
+
+
+![](Images/11.png)
+![](Images/12.png)
+
+## 调用对象成员函数时的查找。
+![](Images/13.png)
+
+## 虚析构函数
+继承关系对拷贝控制最直接的影响是基类通常应该定义一个**虚析构函数**，这样就能动态分配继承体系中的对象了。  
+比如delete一个`Quote*`对象，该指针有可能实际指向了一个`Bulk_quote`类型的对象。如果是这样的话，编译器就必须清楚他应该执行的是`Bulk_quote`的析构函数，使用虚析构函数就可以保证执行正确的析构函数版本。
+
+- 虚析构函数将阻止**合成移动操作**。
+
+## 合成拷贝与继承
+当为派生类定义拷贝或移动构造函数时，通常会使用对应的基类构造函数初始化对象的基类部分。
+调用父类对应的拷贝控制成员函数，然后将本类的新成员进行拷贝控制操作即可。

@@ -1,4 +1,4 @@
-#include"String.h"
+#include"SelfQuote.h"
 #include<string>
 #include<vector>
 #include<iostream>
@@ -6,6 +6,5 @@
 #include<algorithm>
 using namespace std;
 int main() {
-	String a("Helloworld");
-	
+	Disc_quote a;
 }
