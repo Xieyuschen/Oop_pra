@@ -21,6 +21,9 @@
     <ClInclude Include="SelfQuote.h">
       <Filter>Header Files</Filter>
     </ClInclude>
+    <ClInclude Include="Basket.h">
+      <Filter>Header Files</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="main.cpp">
