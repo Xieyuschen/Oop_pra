@@ -12,8 +12,7 @@ using namespace std;
 class Basket
 {
 public:
-	Basket();
-	~Basket();
+
 	//double add_item(const std::shared_ptr<Quote>& sale) {
 	//	items.insert(sale);
 	//}

@@ -270,7 +270,7 @@ void playgame(father& s){/*blabla*/}
 比如说：public继承的可以访问基类public成员，而private就不可以。
 
 ## 派生类向基类转换的可访问性：
-![](Images/10.png)
+![](Images/10.png)  
 **这里要区分的内容**。
 - 用户代码即**类外代码**，如果不是public的话是不能发生转换，因为在转换发生的时候类中私有继承的成员不能传递给令一个对象（因为类外无法访问private/protected成员）。  
 - 如果在成员函数中的话，转换可以随便进行。
