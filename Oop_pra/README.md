@@ -297,4 +297,34 @@ void playgame(father& s){/*blabla*/}
 举个简单的例子，如果`vecotr<Quote>`这样的一个容器，如果放进去一个`Bulk_quote`对象，那么这个对象中的派生部分也会被忽略掉。
 
 ## 在容器中放置（智能）指针而非对象
-因为类指针对象具有静态类型和动态类型，静态类型保证
+因为类指针对象具有静态类型和动态类型，静态类型保证数据的完整性，动态类型保证多态。
+
+# multiset的使用：
+[Magic Words,Click Me  :)](http://www.cplusplus.com/reference/set/multiset/)
+## begin 与 cbegin:
+返回一个指向容器中第一个元素的迭代器。其中cbegin返回一个
+一般是容器中最小的元素，而不是根元素
+## end 与 cend
+返回最后一个元素的迭代器，这个最后一个元素一般是比较出来最大的。
+
+## count
+接受一个值，返回该容器中有多少个该元素。
+
+## emplace与insert
+这两个函数都是在容器中假如一个新的元素。但是有所不同
+比如说现在有一个对象dog,只有一个string类型的公有成员name。
+```cpp
+class dog{
+public:
+    std::string name;
+}
+
+int main(){
+    std::vector<dog> pets;
+    //错误，无法将字符串加入到类型为dog的vector中
+    pets.push_back("Wangcai"); 
+
+    //正确，emplace会调用dog的构造函数，构造出一个name值为Wangcaidog的dog对象。
+    pets.emplace("Wangcai");
+}
+```

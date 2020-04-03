@@ -7,6 +7,7 @@
 #include"Bulk_quote.h"
 #include"disc_quote.h"
 #include"Quote.h"
+using namespace std;
 //智能指针在memory里面
 class Basket
 {
@@ -16,13 +17,16 @@ public:
 	double add_item(const std::shared_ptr<Quote>& sale) {
 		items.insert(sale);
 	}
-	double total_receipt()const {
-		double ret = 0.0;
-		for (auto a : items) {
-			ret += a->net_price;
+	double total_receipt(ostream &os)const {
+		double sum = 0.0;
+		//Returns an iterator pointing to the first element
+		// in the container which is considered to go after val.
+		//所以
+		for (auto iter = items.cbegin(); iter != items.cend(); iter = items.upper_bound(*iter)) {
+			sum += print_total(os, **iter, items.count(*iter));
 		}
-		std::cout << "The total in Basket are: " << ret << endl;
-		return ret;
+		os << "Total Sale: " << sum << endl;
+		return sum;
 	}
 private:
 	//std::multimap < std::shared_ptr<Quote>, decltype()
@@ -31,6 +35,5 @@ private:
 	std::multiset<std::shared_ptr<Quote>, decltype(compare)*> items{compare};
 
 };
-
 
 #endif // !BASKET_H
