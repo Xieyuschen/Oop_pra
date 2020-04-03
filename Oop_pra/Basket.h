@@ -14,8 +14,15 @@ class Basket
 public:
 	Basket();
 	~Basket();
-	double add_item(const std::shared_ptr<Quote>& sale) {
-		items.insert(sale);
+	//double add_item(const std::shared_ptr<Quote>& sale) {
+	//	items.insert(sale);
+	//}
+	//解释为什么在参数这里可以使用基类Quote类而不需要担心转换时丢弃掉部分派生类内容。
+	void add_item(const Quote& sale) {
+		items.insert(std::shared_ptr<Quote>(sale.clone()));
+	}
+	void add_item(Quote&& sale) {
+		items.insert(std::shared_ptr<Quote>(std::move(sale).clone()));
 	}
 	double total_receipt(ostream &os)const {
 		double sum = 0.0;
