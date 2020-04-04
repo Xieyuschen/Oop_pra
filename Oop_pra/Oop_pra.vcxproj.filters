@@ -15,24 +15,12 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Basket.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Quote.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="Bulk_quote.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
-    <ClInclude Include="disc_quote.h">
+    <ClInclude Include="Header.h">
       <Filter>Header Files</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="Quota.cpp">
-      <Filter>Source Files</Filter>
-    </ClCompile>
-    <ClCompile Include="bulk_quote.cpp">
+    <ClCompile Include="Source.cpp">
       <Filter>Source Files</Filter>
     </ClCompile>
     <ClCompile Include="main.cpp">
