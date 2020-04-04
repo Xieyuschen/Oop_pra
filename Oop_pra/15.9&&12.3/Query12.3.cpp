@@ -1,4 +1,4 @@
-#include "Header.h"
+#include"Query12.3.h"
 #include <sstream>
 #include <algorithm>
 
@@ -9,12 +9,12 @@ TextQuery::TextQuery(std::ifstream& ifs) : input(new vector<string>)
     for (string line; std::getline(ifs, line); ++lineNo) {
         input->push_back(line);
         std::istringstream line_stream(line);
-        //Á÷ÔÚÊäÈë×Ö·ûµÄÊ±ºò»á×Ô¶¯ÔÚ¿Õ¸ñ´¦¶Ï¿ª
+        //ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ö·ï¿½ï¿½ï¿½Ê±ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½Ú¿Õ¸ñ´¦¶Ï¿ï¿½
         for (string text, word; line_stream >> text; word.clear()) {
             // avoid read a word followed by punctuation(such as: word, )
             std::remove_copy_if(text.begin(), text.end(), std::back_inserter(word), ispunct);
             // use reference avoid count of shared_ptr add.
-            //Èç¹ûmapÃ»ÓÐ[]ÖÐËù±êÊ¶µÄÖµ£¬ÄÇÃ´¾Í»áÔÚÀïÃæ×Ô¶¯¼ÓÒ»¸ö
+            //ï¿½ï¿½ï¿½mapÃ»ï¿½ï¿½[]ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ê¶ï¿½ï¿½Öµï¿½ï¿½ï¿½ï¿½Ã´ï¿½Í»ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½ï¿½Ô¶ï¿½ï¿½ï¿½Ò»ï¿½ï¿½
             auto& nos = result[word];
             if (!nos) nos.reset(new std::set<LineNo>);
             nos->insert(lineNo);
@@ -26,9 +26,9 @@ QueryResult TextQuery::query(const string& str) const
 {
     // use static just allocate once.
     static shared_ptr<std::set<LineNo>> nodata(new std::set<LineNo>);
-    //·µ»ØµÄÊÇÒ»¸ö¶þÔª×é
+    //ï¿½ï¿½ï¿½Øµï¿½ï¿½ï¿½Ò»ï¿½ï¿½ï¿½ï¿½Ôªï¿½ï¿½
     auto found = result.find(str);
-    //Èç¹ûÊÇÎ²ºóÖ¸Õë£¬Ôò·µ»ØÒ»¸ö¿ÕµÄQueryResult¶ÔÏó
+    //ï¿½ï¿½ï¿½ï¿½ï¿½Î²ï¿½ï¿½Ö¸ï¿½ë£¬ï¿½ò·µ»ï¿½Ò»ï¿½ï¿½ï¿½Õµï¿½QueryResultï¿½ï¿½ï¿½ï¿½
     if (found == result.end()) return QueryResult(str, nodata, input);
     else return QueryResult(str, found->second, input);
 }
