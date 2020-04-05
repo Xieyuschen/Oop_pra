@@ -19,8 +19,10 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="BinQuery.h" />
-    <ClInclude Include="Query_base.h" />
+    <ClInclude Include="textquery.h" />
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="textquery.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">
     <VCProjectVersion>16.0</VCProjectVersion>

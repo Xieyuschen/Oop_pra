@@ -15,11 +15,13 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Query_base.h">
+    <ClInclude Include="textquery.h">
       <Filter>Header Files</Filter>
     </ClInclude>
-    <ClInclude Include="BinQuery.h">
-      <Filter>Header Files</Filter>
-    </ClInclude>
+  </ItemGroup>
+  <ItemGroup>
+    <ClCompile Include="textquery.cpp">
+      <Filter>Source Files</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>
