@@ -81,7 +81,7 @@ private:
 //Query包装了Query_base
 class Query
 {
-	friend Query operator~(const Query&);					//非
+	friend Query operator~(const Query&);					//非 
 	friend Query operator&(const Query&, const Query&);	//与
 	friend Query operator|(const Query&, const Query&);	//或
 	friend std::ostream& operator<<(std::ostream& os, const Query& query);

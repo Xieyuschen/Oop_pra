@@ -109,6 +109,7 @@ QueryResult AndQuery::eval(const TextQuery& text) const
 	auto left = left_.eval(text);
 	auto right = right_.eval(text);
 	auto ret_lines = std::make_shared<std::set<line_no>>();
+
 	//将两个范围的交集写入一个目的迭代器中
 	//本次调用的目的迭代器向ret_lines添加元素
 	set_intersection(left.begin(), left.end(),
