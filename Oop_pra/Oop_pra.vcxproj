@@ -22,6 +22,7 @@
     <ClInclude Include="textquery.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Query12.3.cpp" />
     <ClCompile Include="textquery.cpp" />
   </ItemGroup>
   <PropertyGroup Label="Globals">

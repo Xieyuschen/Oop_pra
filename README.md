@@ -333,10 +333,12 @@ int main(){
 # 对于二元运算符的重载
 如下代码：  
 如果这样调用的话是可以成功的：`Query a;  cout<<a;`.  
-即重载的运算符`<<`左边接受一个`ostream`参数，右边接受一个`Query`类的参数。正好与参数列表所对应。  
+即重载的运算符`<<`左边接受一个`ostream`参数，右边接受一个`Query`类的参数，正好与参数列表所对应。  
 ```cpp
 std::ostream& operator<<(std::ostream& os, const Query& query) {
 
 	return os << query.rep();
 }
 ```
+
+# 15.9的一些设计：
